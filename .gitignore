@@ -1,0 +1,16 @@
+# Secrets — NE JAMAIS COMMITTER
+.env
+.env.local
+.env.production
+
+# Next.js
+.next/
+out/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
