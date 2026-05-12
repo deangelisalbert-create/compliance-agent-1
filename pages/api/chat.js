@@ -43,7 +43,14 @@ export default async function handler(req, res) {
   if (!rateLimit(ip)) return res.status(429).json({ error: "Trop de requêtes. Réessayez dans quelques minutes." });
   const { messages } = req.body || {};
   if (!Array.isArray(messages) || messages.length === 0) return res.status(400).json({ error: "Messages invalides" });
-  if (!process.env.ANTHROPIC_API_KEY) return res.status(500).json({ error: "Clé API manquante. Configurez ANTHROPIC_API_KEY dans Vercel." });
+  console.log("API KEY =", process.env.ANTHROPIC_API_KEY);
+
+if (!process.env.ANTHROPIC_API_KEY) {
+  return res.status(500).json({
+    error: "Clé API manquante",
+    env: process.env.ANTHROPIC_API_KEY || "UNDEFINED"
+  });
+}
   try {
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
