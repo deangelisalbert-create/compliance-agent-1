@@ -41,7 +41,9 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Méthode non autorisée" });
   const ip = getClientIp(req);
   if (!rateLimit(ip)) return res.status(429).json({ error: "Trop de requêtes. Réessayez dans quelques minutes." });
-  const { messages } = req.body || {};
+  return res.status(200).json({
+  anthro: process.env.ANTHROPIC_API_KEY || "UNDEFINED"
+});
   if (!Array.isArray(messages) || messages.length === 0) return res.status(400).json({ error: "Messages invalides" });
   console.log("API KEY =", process.env.ANTHROPIC_API_KEY);
 
